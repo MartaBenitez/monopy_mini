@@ -21,18 +21,13 @@ white = (255, 255, 255)
 # Establecer la velocidad del bucle
 clock = pygame.time.Clock()
 
+# Nuevo estado para controlar si el juego está en curso
+game_running = False
+
 # Bucle que mantiene el programa corriendo hasta que se decide cerrar
 running = True
 while running:
-
     clock.tick(5) 
-    # Configura el color de fondo de la ventana. RGB
-    # Las imágenes se apilan a medida que se lee el código por lo que el fondo va el primero
-    screen.fill((0,0,0))
-    
-    # Pantalla de inicio del juego
-    crear_pantalla_inicio(screen,width,height,font,white)
-    pygame.display.update()
 
     # Eventos
     for event in pygame.event.get():
@@ -41,11 +36,25 @@ while running:
             running = False
         # Eventos al pulsar teclas
         elif event.type == pygame.KEYDOWN:
-            # Iniciar el juego al pulsar enter
-            if event.key == pygame.K_BACKSPACE:
-                # Inicia el juego
-                iniciar_juego()
-            
+            # Iniciar el juego al pulsar space
+            if event.key == pygame.K_SPACE:
+                 if not game_running:
+                    # Cambia el estado del juego
+                    game_running = True
+    
+     # Lógica de juego
+    if game_running:
+        # Pantalla en negro
+        screen.fill((0,0,0))
+        # Inicia el juego
+        start_game(screen, width, height, font, white)
+        # Actualiza
+        pygame.display.update()
+    else:
+        # Pantalla de inicio del juego
+        draw_start_screen(screen, width, height, font, white)
+        # Actualiza
+        pygame.display.update()
 
 
     
